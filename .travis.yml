@@ -1,0 +1,32 @@
+language: java
+jdk:
+- openjdk7
+sudo: required
+before_script:
+- cd $HOME
+- sudo apt-get install -y lzop git-core gnupg flex bison gperf build-essential zip
+  curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev
+  libx11-dev lib32z-dev ccache libgl1-mesa-dev libxml2-utils xsltproc unzip maven
+  schedtool &> /dev/null
+- git clone https://sumitrajdev@bitbucket.org/sumitrajdev/twrp-5.1.1.git $HOME/tmp
+- mv $HOME/tmp/twrp-5.1.1.tar.xz $HOME/twrp.tar.xz
+- rm -rf tmp
+- wget https://github.com/TwrpBuilder/twrp-5.1.1-source/releases/download/initial/twrp-5.1.1.tar.xz
+  -O $HOME/twrp.tar.xz
+- tar -xvf twrp.tar.xz &> log
+script:
+- cd $HOME/twrp
+- git clone https://github.com/TwrpBuilder/android_device_Accent_Speed_X2.git device/Accent/Speed_X2
+- rm -rf bootable/recovery
+- git clone https://github.com/omnirom/android_bootable_recovery.git bootable/recovery
+- source build/envsetup.sh ; lunch cm_Speed_X2-eng
+- make -j16 recoveryimage
+- cd out/target/product/Speed_X2/
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key: "$GIT_OAUTH_TOKEN_TB"
+  file: "$HOME/twrp/out/target/product/Speed_X2/recovery.img"
+  on:
+    repo: TwrpBuilder/android_device_Accent_Speed_X2
