@@ -4,10 +4,10 @@ services:
 before_install:
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
-- cd $HOME && mkdir twrp
+- cd $HOME
 - wget -q https://github.com/kirito96/minimal-cm-twrp-source/releases/download/5.1-cm/twrp-5.1-cm.tar.xz
   -O $HOME/twrp.tar.xz
-- tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
+- tar -xJf twrp.tar.xz --directory $HOME/ && rm twrp.tar.xz && mv twrp-5.1-cm/ twrp/
 script:
   - cd $HOME/twrp/ && git clone https://github.com/TwrpBuilder/android_device_Accent_Speed_X2.git device/Accent/Speed_X2
   - rm -rf bootable/recovery && git clone https://github.com/omnirom/android_bootable_recovery.git bootable/recovery-twrp
