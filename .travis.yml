@@ -18,7 +18,7 @@ script:
     exit
     EOF
 after_success:
-  - export version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d '"' -f2)
+  - export version=$(cat bootable/recovery-twrp/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d '"' -f2)
   - cp $HOME/twrp/out/target/product/Speed_X2/recovery.img $HOME/twrp/TWRP-$version-Speed_X2-$(date +"%Y%m%d").img
 
 deploy:
