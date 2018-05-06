@@ -31,3 +31,7 @@ deploy:
     tags: false
     repo: TwrpBuilder/android_device_Accent_Speed_X2
     branch: master
+
+branches:
+  except:
+    - /^(?i:untagged)-.*$/
